@@ -11,51 +11,19 @@ A Mapped Diagnostic Context (MDC) propagation Akka Dispatcher for the asynchrono
 
 #### How To Use
 
-##### Configure Jitpack
 1. Add the JitPack repository to your build file - build.sbt
 ```scala
 resolvers += "jitpack" at "https://jitpack.io"
 ```
 2. Add the dependency
 ```scala
-libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "v0.0.1"	
+libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "v0.0.2"	
 ```
 
-##### Create a filter
+3. Either add 'MappedDiagnosticContextFilter' to Filters.java
 ```java
-public class MappedDiagnosticContextFilter extends Filter {
+import zyx.cba.MappedDiagnosticContextFilter;
 
-    private final Executor exec;
-
-    /**
-     * @param mat  This object is needed to handle streaming of requests
-     *             and responses.
-     * @param exec This class is needed to execute code asynchronously.
-     *             It is used below by the <code>thenAsyncApply</code> method.
-     */
-    @Inject
-    public MappedDiagnosticContextFilter(Materializer mat, Executor exec) {
-        super(mat);
-        this.exec = exec;
-    }
-
-    @Override
-    public CompletionStage<Result> apply(Function<Http.RequestHeader, CompletionStage<Result>> next,
-                                         Http.RequestHeader requestHeader) {
-        MDC.put("X-UUID", java.util.UUID.randomUUID());
-        return next.apply(requestHeader).thenApplyAsync(
-                result -> {
-                    MDC.remove("X-UUID");
-                    return result;
-                },
-                exec
-        );
-    }
-}
-```
-
-##### Add to Filters.java
-```java
 @Singleton
 public class Filters implements HttpFilters {
     private final MappedDiagnosticContextFilter mdcFilter;
@@ -75,18 +43,29 @@ public class Filters implements HttpFilters {
 }
 ```
 
-##### Update your logging configuration
+Or annotate your controllers/methods with 'EnableMDC' annotation
+```java
+import zyx.cba.EnableMDC;
+import play.mvc.Controller;
+
+@EnableMDC
+public class MyController extends Controller {
+ // ...
+}
+```
+
+4. Update your logging configuration
 ```xml
 <pattern>%d{HH:mm:ss.SSS} %coloredLevel %logger{35} %mdc{X-UUID:--} - %msg%n%rootException</pattern>
 ```
 
-##### Update your application.conf
+5. Update your application.conf
 ```hocon
 play {
   akka {
     actor {
       default-dispatcher {
-        type = "MDCPropagatingDispatcherConfigurator"
+        type = "zyx.cba.MDCPropagatingDispatcherConfigurator"
       }
     }
   }

@@ -1,3 +1,5 @@
+package zyx.cba
+
 import java.util.concurrent.TimeUnit
 
 import akka.dispatch._
@@ -16,7 +18,7 @@ import scala.concurrent.duration.{Duration, FiniteDuration}
   *   akka {
   *     actor {
   *       default-dispatcher = {
-  *         type = "monitoring.MDCPropagatingDispatcherConfigurator"
+  *         type = "zyx.cba.MDCPropagatingDispatcherConfigurator"
   *       }
   *     }
   *   }

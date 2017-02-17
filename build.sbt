@@ -14,6 +14,7 @@ retrieveManaged := true
 
 libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.3.0" % "provided",
+  "com.typesafe.play" %% "play" % "2.5.10" % "provided",
   "org.slf4j" % "slf4j-api" % "1.7.21" % "provided",
   "com.typesafe.akka" %% "akka-actor" % "2.4.12" % "provided"
 )
