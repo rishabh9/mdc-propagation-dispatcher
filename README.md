@@ -25,23 +25,31 @@ libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "v
 ```java
 public class MappedDiagnosticContextFilter extends Filter {
 
+    private final Executor exec;
+
     /**
-     * @param mat This object is needed to handle streaming of requests
-     *            and responses.
+     * @param mat  This object is needed to handle streaming of requests
+     *             and responses.
+     * @param exec This class is needed to execute code asynchronously.
+     *             It is used below by the <code>thenAsyncApply</code> method.
      */
     @Inject
-    public MappedDiagnosticContextFilter(Materializer mat) {
+    public MappedDiagnosticContextFilter(Materializer mat, Executor exec) {
         super(mat);
+        this.exec = exec;
     }
 
     @Override
     public CompletionStage<Result> apply(Function<Http.RequestHeader, CompletionStage<Result>> next,
                                          Http.RequestHeader requestHeader) {
-        try {
-            return next.apply(requestHeader);
-        } finally {
-            MDC.remove("X-UserId");
-        }
+        MDC.put("X-UUID", java.util.UUID.randomUUID());
+        return next.apply(requestHeader).thenApplyAsync(
+                result -> {
+                    MDC.remove("X-UUID");
+                    return result;
+                },
+                exec
+        );
     }
 }
 ```
@@ -69,7 +77,7 @@ public class Filters implements HttpFilters {
 
 ##### Update your logging configuration
 ```xml
-<pattern>%d{HH:mm:ss.SSS} %coloredLevel %logger{35} %mdc{X-UserId:--} - %msg%n%rootException</pattern>
+<pattern>%d{HH:mm:ss.SSS} %coloredLevel %logger{35} %mdc{X-UUID:--} - %msg%n%rootException</pattern>
 ```
 
 ##### Update your application.conf
@@ -77,7 +85,7 @@ public class Filters implements HttpFilters {
 play {
   akka {
     actor {
-      default-dispatcher = {
+      default-dispatcher {
         type = "MDCPropagatingDispatcherConfigurator"
       }
     }
