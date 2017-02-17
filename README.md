@@ -28,7 +28,7 @@ libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "v
 
 3. Either add 'MappedDiagnosticContextFilter' to Filters.java
 ```java
-import zyx.cba.MappedDiagnosticContextFilter;
+import com.github.rishabh9.MappedDiagnosticContextFilter;
 
 @Singleton
 public class Filters implements HttpFilters {
@@ -51,7 +51,7 @@ public class Filters implements HttpFilters {
 
 Or annotate your controllers/methods with 'EnableMDC' annotation
 ```java
-import zyx.cba.EnableMDC;
+import com.github.rishabh9.EnableMDC;
 import play.mvc.Controller;
 
 @EnableMDC
@@ -71,7 +71,7 @@ play {
   akka {
     actor {
       default-dispatcher {
-        type = "zyx.cba.MDCPropagatingDispatcherConfigurator"
+        type = "com.github.rishabh9.MDCPropagatingDispatcherConfigurator"
       }
     }
   }
