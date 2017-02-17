@@ -69,9 +69,18 @@ public class Filters implements HttpFilters {
 
 ##### Update your logging configuration
 ```xml
-<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-        <pattern>%d{HH:mm:ss.SSS} %coloredLevel %logger{35} %mdc{X-UserId:--} - %msg%n%rootException</pattern>
-    </encoder>
-</appender>
+<pattern>%d{HH:mm:ss.SSS} %coloredLevel %logger{35} %mdc{X-UserId:--} - %msg%n%rootException</pattern>
+```
+
+##### Update your application.conf
+```hocon
+play {
+  akka {
+    actor {
+      default-dispatcher = {
+        type = "MDCPropagatingDispatcherConfigurator"
+      }
+    }
+  }
+}
 ```
