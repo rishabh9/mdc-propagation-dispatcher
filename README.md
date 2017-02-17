@@ -1,6 +1,8 @@
 The Mapped Diagnostic Context (MDC) Propagation Akka Dispatcher
 =============
 
+[![](https://jitpack.io/v/rishabh9/mdc-propagation-dispatcher.svg)](https://jitpack.io/#rishabh9/mdc-propagation-dispatcher)
+
 A Mapped Diagnostic Context (MDC) propagation Akka Dispatcher for the asynchronous environment of the Play Framework.
 
 #### Links
@@ -16,7 +18,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 2. Add the dependency
 ```scala
-libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "0.0.1"
+libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "v0.0.1"	
 ```
 
 ##### Create a filter
