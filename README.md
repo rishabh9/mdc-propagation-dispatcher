@@ -23,7 +23,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 2. Add the dependency
 ```scala
-libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "v0.0.2"	
+libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "v0.0.3"	
 ```
 
 3. Either add 'MappedDiagnosticContextFilter' to Filters.java
