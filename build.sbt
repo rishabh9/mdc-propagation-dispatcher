@@ -1,6 +1,6 @@
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
-organization := "dispatcher"
+organization := "com.github.rishabh9"
 
 name := "mdc-propagation-dispatcher"
 
