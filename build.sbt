@@ -29,7 +29,26 @@ initialize := {
 
 sources in (Compile, doc) := Seq.empty
 
+// RELEASE --
+
+// Maven publishing info
+publishMavenStyle := true
+
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (version.value.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+
 publishArtifact in (Compile, packageDoc) := false
+
+publishArtifact in Test := false
+
+pomIncludeRepository := { _ => false }
+
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
 // The Release configuration
 releaseProcess := Seq[ReleaseStep](
@@ -39,8 +58,33 @@ releaseProcess := Seq[ReleaseStep](
   setReleaseVersion,                      // : ReleaseStep
   commitReleaseVersion,                   // : ReleaseStep, performs the initial git checks
   tagRelease,                             // : ReleaseStep
-  //publishArtifacts,                       // : ReleaseStep, checks whether `publishTo` is properly set up
+  publishArtifacts, // : ReleaseStep, checks whether `publishTo` is properly set up
   setNextVersion,                         // : ReleaseStep
   commitNextVersion,                      // : ReleaseStep
   pushChanges                             // : ReleaseStep, also checks that an upstream branch is properly configured
 )
+
+pomExtra := (
+  <url>https://github.com/rishabh9/mdc-propagation-dispatcher/</url>
+
+    <licenses>
+      <license>
+        <name>Apache 2</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      </license>
+    </licenses>
+
+    <scm>
+      <connection>scm:git:git@github.com:rishabh9/mdc-propagation-dispatcher.git</connection>
+      <developerConnection>scm:git:git@github.com:rishabh9/mdc-propagation-dispatcher.git</developerConnection>
+      <url>https://github.com/rishabh9/mdc-propagation-dispatcher/</url>
+    </scm>
+
+    <developers>
+      <developer>
+        <id>rishabh9 at gmail dot com</id>
+        <name>Rishabh Joshi</name>
+        <url>https://github.com/rishabh9</url>
+      </developer>
+    </developers>
+  )
