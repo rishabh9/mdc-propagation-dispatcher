@@ -82,7 +82,7 @@ pomExtra := (
 
     <developers>
       <developer>
-        <id>rishabh9 at gmail dot com</id>
+        <id>rishabh9</id>
         <name>Rishabh Joshi</name>
         <url>https://github.com/rishabh9</url>
       </developer>
