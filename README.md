@@ -4,6 +4,7 @@ The Mapped Diagnostic Context (MDC) Propagation Akka Dispatcher
 A Mapped Diagnostic Context (MDC) propagation Akka Dispatcher for the asynchronous environment of the Play Framework.
 
 Took the idea from here:
+
 1. http://yanns.github.io/blog/2014/05/04/slf4j-mapped-diagnostic-context-mdc-with-play-framework/
 2. https://github.com/jroper/thread-local-context-propagation/
 
