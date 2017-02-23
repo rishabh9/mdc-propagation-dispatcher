@@ -1,8 +1,6 @@
 The Mapped Diagnostic Context (MDC) Propagation Akka Dispatcher
 =============
 
-[![](https://jitpack.io/v/rishabh9/mdc-propagation-dispatcher.svg)](https://jitpack.io/#rishabh9/mdc-propagation-dispatcher)
-
 A Mapped Diagnostic Context (MDC) propagation Akka Dispatcher for the asynchronous environment of the Play Framework.
 
 Took the idea from here:
@@ -17,16 +15,12 @@ Refer the code and customize to your whims and fancy.
 
 #### How To Use
 
-1. Add the JitPack repository to your build file - build.sbt
+###### Add the dependency
 ```scala
-resolvers += "jitpack" at "https://jitpack.io"
-```
-2. Add the dependency
-```scala
-libraryDependencies += "com.github.rishabh9" % "mdc-propagation-dispatcher" % "v0.0.3"	
+libraryDependencies += "com.github.rishabh9" %% "mdc-propagation-dispatcher" % "0.0.5"	
 ```
 
-3. Either add 'MappedDiagnosticContextFilter' to Filters.java
+###### Either add 'MappedDiagnosticContextFilter' to Filters.java
 ```java
 import com.github.rishabh9.MappedDiagnosticContextFilter;
 
@@ -49,7 +43,7 @@ public class Filters implements HttpFilters {
 }
 ```
 
-Or annotate your controllers/methods with 'EnableMDC' annotation
+###### Or annotate your controllers/methods with 'EnableMDC' annotation
 ```java
 import com.github.rishabh9.EnableMDC;
 import play.mvc.Controller;
@@ -60,12 +54,12 @@ public class MyController extends Controller {
 }
 ```
 
-4. Update your logging configuration
+###### Update your logging configuration
 ```xml
 <pattern>%d{HH:mm:ss.SSS} %coloredLevel %logger{35} %mdc{X-UUID:--} - %msg%n%rootException</pattern>
 ```
 
-5. Update your application.conf
+###### Update your application.conf
 ```hocon
 play {
   akka {
