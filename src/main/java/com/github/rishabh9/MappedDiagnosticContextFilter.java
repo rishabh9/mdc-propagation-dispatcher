@@ -2,6 +2,7 @@ package com.github.rishabh9;
 
 import akka.stream.Materializer;
 import org.slf4j.MDC;
+import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Filter;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -9,7 +10,6 @@ import play.mvc.Result;
 import javax.inject.Inject;
 import java.util.UUID;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Executor;
 import java.util.function.Function;
 
 /**
@@ -17,18 +17,18 @@ import java.util.function.Function;
  */
 public class MappedDiagnosticContextFilter extends Filter {
 
-    private final Executor exec;
+    private final HttpExecutionContext ec;
 
     /**
      * @param mat  This object is needed to handle streaming of requests
      *             and responses.
-     * @param exec This class is needed to execute code asynchronously.
+     * @param ec This class is needed to execute code asynchronously.
      *             It is used below by the <code>thenAsyncApply</code> method.
      */
     @Inject
-    public MappedDiagnosticContextFilter(Materializer mat, Executor exec) {
+    public MappedDiagnosticContextFilter(Materializer mat, HttpExecutionContext ec) {
         super(mat);
-        this.exec = exec;
+        this.ec = ec;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MappedDiagnosticContextFilter extends Filter {
                     MDC.remove("X-UUID");
                     return result;
                 },
-                exec
+                ec.current()
         );
     }
 }
