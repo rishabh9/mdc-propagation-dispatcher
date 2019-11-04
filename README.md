@@ -18,7 +18,7 @@ Refer the code and customize to your whims and fancy.
 
 ###### Add the dependency
 ```scala
-libraryDependencies += "com.github.rishabh9" %% "mdc-propagation-dispatcher" % "0.0.5"	
+libraryDependencies += "com.github.rishabh9" %% "mdc-propagation-dispatcher" % "0.0.7"	
 ```
 
 ###### Either add 'MappedDiagnosticContextFilter' to Filters.java
