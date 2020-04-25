@@ -6,17 +6,17 @@ name := "mdc-propagation-dispatcher"
 
 version := (version in ThisBuild).value
 
-scalaVersion := "2.12.10"
+scalaVersion := "2.13.1"
 
 exportJars := true
 
 retrieveManaged := true
 
 libraryDependencies ++= Seq(
-  "com.typesafe" % "config" % "1.3.0" % "provided",
+  "com.typesafe" % "config" % "1.4.0" % "provided",
   "com.typesafe.play" %% "play" % "2.7.3" % "provided",
-  "org.slf4j" % "slf4j-api" % "1.7.21" % "provided",
-  "com.typesafe.akka" %% "akka-actor" % "2.5.26" % "provided"
+  "org.slf4j" % "slf4j-api" % "1.7.30" % "provided",
+  "com.typesafe.akka" %% "akka-actor" % "2.6.4" % "provided"
 )
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
